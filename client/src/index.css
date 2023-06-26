@@ -1,0 +1,11 @@
+*{
+  box-sizing: border-box;
+}
+/* Button{
+  border-radius: 0 !important;
+  background-color: black !important;
+} */
+Button{
+  height: 40px 0 !important;
+  border-radius: 0 !important;
+}
