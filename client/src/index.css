@@ -8,6 +8,7 @@
   padding: 0;
   margin: 0;
   font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
 }
 /* Button{
   border-radius: 0 !important;
@@ -16,4 +17,22 @@
 Button{
   height: 40px 0 !important;
   border-radius: 0 !important;
+  box-shadow: none !important;
+}
+input {
+  height: 40px !important;
+  border-radius: 0 !important;
+  border: 1px solid #bbbbbb !important;
+  /*width: 100% !important;
+  padding-left: 15px !important; */
+}
+input:focus{
+  box-shadow: none !important;
+  border: 1px solid #343434 !important;
+}
+.ant-form-item{
+  margin-bottom:10 !important;
+}
+.ant-form-item-label{
+  padding:0 !important;
 }
