@@ -5,13 +5,13 @@ module.exports = {
   ],
   theme: {
     extend: {
-      colors: {
-          primary : '#2E3840'
+      colors:{
+        primary:'#2E3840'
       }
     },
   },
   plugins: [],
-  corePlugins: {
-    preflight: false,
+  corePlugins:{
+    preflight:false,
   },
 }
