@@ -1,8 +1,8 @@
 import React from "react";
-import { Form, Input, Button, } from "antd";
+import { Form, Input, Button,message } from "antd";
 import { Link } from "react-router-dom";
 import Divider from "../../components/Divider";
-// import { LoginUser } from "../../apicalls/users";
+import { LoginUser } from "../../apicalls/users";
 // import { useDispatch, useSelector } from "react-redux";
 // import { SetButtonLoading } from "../../redux/loadersSlice";
 // import { getAntdFormInputRules } from "../../utils/helpers";
@@ -10,8 +10,22 @@ import Divider from "../../components/Divider";
 function Login() {
   // const { buttonLoading } = useSelector((state) => state.loaders);
   // const dispatch = useDispatch();
-  const onFinish = (values) => {
-      console.log("Success",values);
+  const onFinish = async (values) => {
+    try {
+      // dispatch(SetButtonLoading(true));
+      const response = await LoginUser(values);
+      // dispatch(SetButtonLoading(false));
+      if (response.success) {
+        localStorage.setItem("token", response.data);
+        message.success(response.message);
+        window.location.href = "/";
+      } else {
+        throw new Error(response.message);
+      }
+    } catch (error) {
+      // dispatch(SetButtonLoading(false));
+      message.error(error.message);
+    }
   };
 
   // useEffect(() => {

@@ -1,8 +1,8 @@
 import React from "react";
-import { Form, Input, Button } from "antd";
+import { Form, Input, Button,message } from "antd";
 import { Link } from "react-router-dom";
 import Divider from "../../components/Divider";
-// import { RegisterUser } from "../../apicalls/users";
+import { RegisterUser } from "../../apicalls/users";
 // import { useDispatch, useSelector } from "react-redux";
 // import { SetButtonLoading } from "../../redux/loadersSlice";
 // import { getAntdFormInputRules } from "../../utils/helpers";
@@ -11,9 +11,22 @@ function Register() {
   // const navigate = useNavigate();
   // const { buttonLoading } = useSelector((state) => state.loaders);
   // const dispatch = useDispatch();
-  const onFinish = (values) => {
-    console.log("Success",values);
-};
+  const onFinish = async (values) => {
+    try {
+      // dispatch(SetButtonLoading(true));
+      const response = await RegisterUser(values);
+      // dispatch(SetButtonLoading(false));
+      if (response.success) {
+        message.success(response.message);
+        // navigate("/login");
+      } else {
+        throw new Error(response.message);
+      }
+    } catch (error) {
+      // dispatch(SetButtonLoading(false));
+      message.error(error.message);
+    }
+  };
 
   // useEffect(() => {
   //   if (localStorage.getItem("token")) {
