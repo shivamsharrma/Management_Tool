@@ -1,6 +1,7 @@
 import { BrowserRouter,Routes,Route } from "react-router-dom";
 import ProtectedPage from "./components/ProtectedPage";
 import Home from "./pages/Home";
+import Profile from "./pages/Profile";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 
@@ -15,6 +16,14 @@ function App() {
             element={
               <ProtectedPage>
                 <Home />
+              </ProtectedPage>
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <ProtectedPage>
+                <Profile />
               </ProtectedPage>
             }
           />
