@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Form, Input, Button,message } from "antd";
 import { Link } from "react-router-dom";
 import Divider from "../../components/Divider";
@@ -28,11 +28,11 @@ function Login() {
     }
   };
 
-  // useEffect(() => {
-  //   if (localStorage.getItem("token")) {
-  //     window.location.href = "/";
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      window.location.href = "/";
+    }
+  }, []);
   return (
     <div className="grid grid-cols-2">
     <div className="bg-primary h-screen flex flex-col justify-center items-center">
