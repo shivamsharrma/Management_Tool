@@ -3,19 +3,19 @@ import { Form, Input, Button,message } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import Divider from "../../components/Divider";
 import { RegisterUser } from "../../apicalls/users";
-// import { useDispatch, useSelector } from "react-redux";
-// import { SetButtonLoading } from "../../redux/loadersSlice";
-// import { getAntdFormInputRules } from "../../utils/helpers";
+import { useDispatch, useSelector } from "react-redux";
+import { SetButtonLoading } from "../../redux/loadersSlice";
+import { getAntdFormInputRules } from "../../utils/helpers";
 
 function Register() {
   const navigate = useNavigate();
-  // const { buttonLoading } = useSelector((state) => state.loaders);
-  // const dispatch = useDispatch();
+  const { buttonLoading } = useSelector((state) => state.loaders);
+  const dispatch = useDispatch();
   const onFinish = async (values) => {
     try {
-      // dispatch(SetButtonLoading(true));
+      dispatch(SetButtonLoading(true));
       const response = await RegisterUser(values);
-      // dispatch(SetButtonLoading(false));
+      dispatch(SetButtonLoading(false));
       if (response.success) {
         message.success(response.message);
         navigate("/login");
@@ -23,7 +23,7 @@ function Register() {
         throw new Error(response.message);
       }
     } catch (error) {
-      // dispatch(SetButtonLoading(false));
+      dispatch(SetButtonLoading(false));
       message.error(error.message);
     }
   };
@@ -54,26 +54,26 @@ function Register() {
             <Form.Item
               label="First Name"
               name="firstName"
-              // rules={getAntdFormInputRules}
+              rules={getAntdFormInputRules}
             >
               <Input />
             </Form.Item>
             <Form.Item
               label="Last Name"
               name="lastName"
-              // rules={getAntdFormInputRules}
+              rules={getAntdFormInputRules}
             >
               <Input />
             </Form.Item>
             <Form.Item label="Email" name="email"
-              // rules={getAntdFormInputRules}
+              rules={getAntdFormInputRules}
             >
               <Input />
             </Form.Item>
             <Form.Item
               label="Password"
               name="password"
-              // rules={getAntdFormInputRules}
+              rules={getAntdFormInputRules}
             >
               <Input type="password" />
             </Form.Item>
@@ -82,9 +82,9 @@ function Register() {
               type="primary"
               htmlType="submit"
               block
-              // loading={buttonLoading}
+              loading={buttonLoading}
             >
-              {/* {buttonLoading ? "Loading" : "Register"} */}
+              {buttonLoading ? "Loading" : "Register"}
             </Button>
 
             <div className="flex justify-center mt-5">

@@ -3,18 +3,18 @@ import { Form, Input, Button,message } from "antd";
 import { Link } from "react-router-dom";
 import Divider from "../../components/Divider";
 import { LoginUser } from "../../apicalls/users";
-// import { useDispatch, useSelector } from "react-redux";
-// import { SetButtonLoading } from "../../redux/loadersSlice";
-// import { getAntdFormInputRules } from "../../utils/helpers";
+import { useDispatch, useSelector } from "react-redux";
+import { SetButtonLoading } from "../../redux/loadersSlice";
+import { getAntdFormInputRules } from "../../utils/helpers";
 
 function Login() {
-  // const { buttonLoading } = useSelector((state) => state.loaders);
-  // const dispatch = useDispatch();
+  const { buttonLoading } = useSelector((state) => state.loaders);
+  const dispatch = useDispatch();
   const onFinish = async (values) => {
     try {
-      // dispatch(SetButtonLoading(true));
+      dispatch(SetButtonLoading(true));
       const response = await LoginUser(values);
-      // dispatch(SetButtonLoading(false));
+      dispatch(SetButtonLoading(false));
       if (response.success) {
         localStorage.setItem("token", response.data);
         message.success(response.message);
@@ -23,7 +23,7 @@ function Login() {
         throw new Error(response.message);
       }
     } catch (error) {
-      // dispatch(SetButtonLoading(false));
+      dispatch(SetButtonLoading(false));
       message.error(error.message);
     }
   };
@@ -51,14 +51,16 @@ function Login() {
           <Form.Item
             label="Email"
             name="email"
-            // rules={getAntdFormInputRules}
+            rules={getAntdFormInputRules}
+            
           >
             <Input />
           </Form.Item>
           <Form.Item
             label="Password"
             name="password"
-            // rules={getAntdFormInputRules}
+            rules={getAntdFormInputRules}
+            
           >
             <Input type="password" />
           </Form.Item>
@@ -67,9 +69,9 @@ function Login() {
             type="primary"
             htmlType="submit"
             block
-            // loading={buttonLoading}
+            loading={buttonLoading}
           >
-            {/* {buttonLoading ? "Loading" : "Login"} */}
+            {buttonLoading ? "Loading" : "Login"}
           </Button>
 
           <div className="flex justify-center mt-5">

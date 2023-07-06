@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { GetLoggedInUser } from '../apicalls/users';
 import { useDispatch, useSelector } from 'react-redux';
 import { SetUser } from '../redux/usersSlice';
+import { SetLoading } from '../redux/loadersSlice';
 
 
 function ProtectedPage({children}) {
@@ -12,9 +13,9 @@ function ProtectedPage({children}) {
     const { user } = useSelector((state) => state.users);
     const getUser = async () => {
         try {
-        //   dispatch(SetLoading(true));
+          dispatch(SetLoading(true));
           const response = await GetLoggedInUser();
-        //   dispatch(SetLoading(false));
+          dispatch(SetLoading(false));
           if (response.success) {
             dispatch(SetUser(response.data));
             // screenTopetUser(response.data);
@@ -22,7 +23,7 @@ function ProtectedPage({children}) {
             throw new Error(response.message);
           }
         } catch (error) {
-        //   dispatch(SetLoading(false));
+          dispatch(SetLoading(false));
           message.error(error.message);
           localStorage.removeItem("token");
           navigate("/login");
