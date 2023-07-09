@@ -12,7 +12,10 @@ function Projects() {
             >Add Project</Button>
         </div>
 
-        {show && <ProjectForm show={show} setShow={setShow}></ProjectForm>}
+        {show && (
+          <ProjectForm show={show} setShow={setShow} reloadData={()=>{}}/>
+        )}
+        
     </div>
   )
 }
