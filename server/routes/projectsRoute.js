@@ -26,7 +26,7 @@ router.post("/get-all-projects", authMiddleware, async (req, res) => {
   try {
     const filters=req.body.filters;
     // const projects = await Project.find({owner: req.body.userId,}).sort({ createdAt: -1 });
-    const projects = await Project.find(filters||{});
+    const projects = await Project.find(filters||{}).sort({createdAt:-1});
 
     res.send({
       success: true,
