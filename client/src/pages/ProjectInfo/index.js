@@ -11,7 +11,7 @@ import Members from "./Members";
 import Tasks from "./Tasks";
 
 function ProjectInfo() {
-  // const [currentUserRole, setCurrentUserRole] = useState("");
+  const [currentUserRole, setCurrentUserRole] = useState("");
   const { user } = useSelector((state) => state.users);
   const [project, setProject] = useState(null);
   const dispatch = useDispatch();
@@ -23,10 +23,10 @@ function ProjectInfo() {
       dispatch(SetLoading(false));
       if (response.success) {
         setProject(response.data);
-        // const currentUser = response.data.members.find(
-        //   (member) => member.user._id === user._id
-        // );
-        // setCurrentUserRole(currentUser.role);
+        const currentUser = response.data.members.find(
+          (member) => member.user._id === user._id
+        );
+        setCurrentUserRole(currentUser.role);
       } else {
         throw new Error(response.message);
       }
@@ -54,7 +54,7 @@ function ProjectInfo() {
             <div className="flex gap-5">
               <span className="text-gray-600 text-sm font-semibold">Role</span>
               <span className="text-gray-600 text-sm uppercase">
-                {/* {currentUserRole} */}
+                {currentUserRole}
               </span>
             </div>
           </div>
@@ -85,7 +85,7 @@ function ProjectInfo() {
             <Tasks />
           </Tabs.TabPane>
           <Tabs.TabPane tab="Members" key="2">
-            <Members project={project}/>
+            <Members project={project} reloadData={getData} />
           </Tabs.TabPane>
         </Tabs>
       </div>
