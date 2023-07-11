@@ -82,7 +82,7 @@ function ProjectInfo() {
 
         <Tabs defaultActiveKey="1">
           <Tabs.TabPane tab="Tasks" key="1">
-            <Tasks />
+            <Tasks project={project}/>
           </Tabs.TabPane>
           <Tabs.TabPane tab="Members" key="2">
             <Members project={project} reloadData={getData} />
