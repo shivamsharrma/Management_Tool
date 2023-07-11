@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { GetProjectById } from "../../apicalls/projects";
-// import { GetAllTasks } from "../../apicalls/tasks";
+import { GetAllTasks } from "../../apicalls/tasks";
 import Divider from "../../components/Divider";
 import { SetLoading } from "../../redux/loadersSlice";
 import { getDateFormat } from "../../utils/helpers";
@@ -11,6 +11,7 @@ import Members from "./Members";
 import Tasks from "./Tasks";
 
 function ProjectInfo() {
+ 
   const [currentUserRole, setCurrentUserRole] = useState("");
   const { user } = useSelector((state) => state.users);
   const [project, setProject] = useState(null);
@@ -36,8 +37,11 @@ function ProjectInfo() {
     }
   };
 
+
+
   useEffect(() => {
     getData();
+   
   }, []);
 
   return (
@@ -82,7 +86,7 @@ function ProjectInfo() {
 
         <Tabs defaultActiveKey="1">
           <Tabs.TabPane tab="Tasks" key="1">
-            <Tasks project={project}/>
+            <Tasks project={project} />
           </Tabs.TabPane>
           <Tabs.TabPane tab="Members" key="2">
             <Members project={project} reloadData={getData} />

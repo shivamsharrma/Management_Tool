@@ -24,10 +24,9 @@ router.post("/create-project", authMiddleware, async (req, res) => {
 // get all projects
 router.post("/get-all-projects", authMiddleware, async (req, res) => {
   try {
-    const filters = req.body.filters;
-    // const projects = await Project.find({owner: req.body.userId,}).sort({ createdAt: -1 });
-    const projects = await Project.find(filters || {}).sort({ createdAt: -1 });
-
+    const projects = await Project.find({
+      owner: req.body.userId,
+    }).sort({ createdAt: -1 });
     res.send({
       success: true,
       data: projects,
@@ -111,7 +110,6 @@ router.post("/delete-project", authMiddleware, async (req, res) => {
   }
 });
 
-
 // add a member to a project
 router.post("/add-member", authMiddleware, async (req, res) => {
   try {
@@ -144,18 +142,18 @@ router.post("/add-member", authMiddleware, async (req, res) => {
   }
 });
 
-// get projects by role
-router.post("/get-projects-by-role", authMiddleware, async (req, res) => {
+// remove a member from a project
+router.post("/remove-member", authMiddleware, async (req, res) => {
   try {
-    const userId = req.body.userId;
-    const projects = await Project.find({ "members.user": userId })
-      .sort({
-        createdAt: -1,
-      })
-      .populate("owner");
+    const { memberId, projectId } = req.body;
+
+    const project = await Project.findById(projectId);
+    project.members.pull(memberId);
+    await project.save();
+
     res.send({
       success: true,
-      data: projects,
+      message: "Member removed successfully",
     });
   } catch (error) {
     res.send({

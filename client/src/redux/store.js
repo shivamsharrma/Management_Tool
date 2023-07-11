@@ -5,7 +5,7 @@ import loadersReducer from "./loadersSlice";
 const store = configureStore({
   reducer: {
     users: usersReducer,
-    loaders: loadersReducer,
+    loaders : loadersReducer
   },
 });
 

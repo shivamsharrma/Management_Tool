@@ -65,7 +65,9 @@ function Register() {
             >
               <Input />
             </Form.Item>
-            <Form.Item label="Email" name="email" rules={getAntdFormInputRules}>
+            <Form.Item label="Email" name="email"
+              rules={getAntdFormInputRules}
+            >
               <Input />
             </Form.Item>
             <Form.Item

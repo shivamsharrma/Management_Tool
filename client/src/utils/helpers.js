@@ -9,4 +9,4 @@ export const getAntdFormInputRules = [
 
 export const getDateFormat = (date) => {
   return moment(date).format("MMMM Do YYYY, h:mm A");
-};
+}

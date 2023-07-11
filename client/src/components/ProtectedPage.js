@@ -1,15 +1,19 @@
 import { message } from "antd";
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { GetLoggedInUser } from "../apicalls/users";
-import { useDispatch, useSelector } from "react-redux";
-import { SetUser } from "../redux/usersSlice";
+import { SetNotifications, SetUser } from "../redux/usersSlice";
 import { SetLoading } from "../redux/loadersSlice";
+import { GetAllNotifications } from "../apicalls/notifications";
+import { Avatar, Badge, Space } from "antd";
+import Notifications from "./Notifications";
 
 function ProtectedPage({ children }) {
+  const [showNotifications, setShowNotifications] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.users);
+  const { user, notifications } = useSelector((state) => state.users);
   const getUser = async () => {
     try {
       dispatch(SetLoading(true));
@@ -17,7 +21,6 @@ function ProtectedPage({ children }) {
       dispatch(SetLoading(false));
       if (response.success) {
         dispatch(SetUser(response.data));
-        // screenTopetUser(response.data);
       } else {
         throw new Error(response.message);
       }
@@ -29,6 +32,22 @@ function ProtectedPage({ children }) {
     }
   };
 
+  const getNotifications = async () => {
+    try {
+      dispatch(SetLoading(true));
+      const response = await GetAllNotifications();
+      dispatch(SetLoading(false));
+      if (response.success) {
+        dispatch(SetNotifications(response.data));
+      } else {
+        throw new Error(response.message);
+      }
+    } catch (error) {
+      dispatch(SetLoading(false));
+      message.error(error.message);
+    }
+  };
+
   useEffect(() => {
     if (localStorage.getItem("token")) {
       getUser();
@@ -36,6 +55,13 @@ function ProtectedPage({ children }) {
       navigate("/login");
     }
   }, []);
+
+  useEffect(() => {
+    if (user) {
+      getNotifications();
+    }
+  }, [user]);
+
   return (
     user && (
       <div>
@@ -51,7 +77,25 @@ function ProtectedPage({ children }) {
             >
               {user?.firstName}
             </span>
-            <i className="ri-notification-line text-white mx-2 bg-gray-200 p-2 rounded-full"></i>
+            <Badge
+              count={
+                notifications.filter((notification) => !notification.read)
+                  .length
+              }
+              className="cursor-pointer"
+            >
+              <Avatar
+                shape="square"
+                size="large"
+                icon={
+                  <i className="ri-notification-line text-white rounded-full"></i>
+                }
+                onClick={() => {
+                  setShowNotifications(true);
+                }}
+              />
+            </Badge>
+
             <i
               className="ri-logout-box-r-line ml-10 text-primary"
               onClick={() => {
@@ -62,6 +106,14 @@ function ProtectedPage({ children }) {
           </div>
         </div>
         <div className="px-5 py-3">{children}</div>
+
+        {showNotifications && (
+          <Notifications
+            showNotifications={showNotifications}
+            setShowNotifications={setShowNotifications}
+            reloadNotifications={getNotifications}
+          />
+        )}
       </div>
     )
   );

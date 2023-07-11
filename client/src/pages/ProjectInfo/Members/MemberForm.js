@@ -1,8 +1,8 @@
-import { Form, Input, Modal, message } from "antd";
+import { Form, Input, message, Modal } from "antd";
 import React from "react";
 import { useDispatch } from "react-redux";
-import { SetLoading } from "../../../redux/loadersSlice";
 import { AddMemberToProject } from "../../../apicalls/projects";
+import { SetLoading } from "../../../redux/loadersSlice";
 import { getAntdFormInputRules } from "../../../utils/helpers";
 
 function MemberForm({
@@ -15,9 +15,7 @@ function MemberForm({
   const formRef = React.useRef(null);
   const dispatch = useDispatch();
   const onFinish = async (values) => {
-    
     try {
-        
       // check if email already exists
       const emailExists = project.members.find(
         (member) => member.user.email === values.email
@@ -57,19 +55,11 @@ function MemberForm({
       }}
     >
       <Form layout="vertical" ref={formRef} onFinish={onFinish}>
-        <Form.Item
-          label="Email"
-          name="email"
-          rules={getAntdFormInputRules}
-        >
+        <Form.Item label="Email" name="email" rules={getAntdFormInputRules}>
           <Input placeholder="Email" />
         </Form.Item>
 
-        <Form.Item
-          label="Role"
-          name="role"
-           rules={getAntdFormInputRules}
-        >
+        <Form.Item label="Role" name="role" rules={getAntdFormInputRules}>
           <select>
             <option value="">Select Role</option>
             <option value="admin">Admin</option>

@@ -13,6 +13,8 @@ function Projects() {
   const { user } = useSelector((state) => state.users);
   const dispatch = useDispatch();
 
+  
+
   const getData = async () => {
     try {
       dispatch(SetLoading(true));
@@ -44,7 +46,7 @@ function Projects() {
       message.error(error.message);
       dispatch(SetLoading(false));
     }
-  };
+  }
 
   React.useEffect(() => {
     getData();
@@ -75,8 +77,7 @@ function Projects() {
       render: (text, record) => {
         return (
           <div className="flex gap-4">
-            <i
-              class="ri-delete-bin-line"
+            <i class="ri-delete-bin-line"
               onClick={() => onDelete(record._id)}
             ></i>
             <i

@@ -1,11 +1,37 @@
-import { Button } from "antd";
+import { Button, message, Table } from "antd";
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { RemoveMemberFromProject } from "../../../apicalls/projects";
+import { SetLoading } from "../../../redux/loadersSlice";
 import MemberForm from "./MemberForm";
-import { useSelector } from "react-redux";
 
 function Members({ project, reloadData }) {
+  const [role, setRole] = React.useState("");
   const [showMemberForm, setShowMemberForm] = React.useState(false);
   const { user } = useSelector((state) => state.users);
+
+  const dispatch = useDispatch();
+  const isOwner = project.owner._id === user._id;
+  const deleteMember = async (memberId) => {
+    try {
+      dispatch(SetLoading(true));
+      const response = await RemoveMemberFromProject({
+        projectId: project._id,
+        memberId,
+      });
+      if (response.success) {
+        reloadData();
+        message.success(response.message);
+      } else {
+        throw new Error(response.message);
+      }
+      dispatch(SetLoading(false));
+    } catch (error) {
+      dispatch(SetLoading(false));
+      message.error(error.message);
+    }
+  };
+
   const columns = [
     {
       title: "First Name",
@@ -31,17 +57,18 @@ function Members({ project, reloadData }) {
       title: "Action",
       dataIndex: "action",
       render: (text, record) => (
-        <Button
-          type="link"
-          //  danger onClick={() => deleteMember(record._id)}
-        >
+        <Button type="link" danger onClick={() => deleteMember(record._id)}>
           Remove
         </Button>
       ),
     },
   ];
 
-  const isOwner = project.owner._id === user._id;
+  // if not owner, then don't show the action column
+  if (!isOwner) {
+    columns.pop();
+  }
+
   return (
     <div>
       <div className="flex justify-end">
@@ -51,6 +78,30 @@ function Members({ project, reloadData }) {
           </Button>
         )}
       </div>
+
+      <div
+       className="w-48"
+      >
+        <span>Select Role</span>
+        <select onChange={(e) => setRole(e.target.value)} value={role}>
+          <option value="">All</option>
+          <option value="employee">Employee</option>
+          <option value="admin">Admin</option>
+          <option value="owner">Owner</option>
+        </select>
+      </div>
+
+      <Table
+        columns={columns}
+        dataSource={project.members.filter((member) => {
+          if (role === "") {
+            return true;
+          } else {
+            return member.role === role;
+          }
+        })}
+        className="mt-4"
+      />
 
       {showMemberForm && (
         <MemberForm

@@ -33,6 +33,7 @@ function Login() {
       window.location.href = "/";
     }
   }, []);
+
   return (
     <div className="grid grid-cols-2">
       <div className="bg-primary h-screen flex flex-col justify-center items-center">
@@ -48,7 +49,11 @@ function Login() {
           <h1 className="text-2xl text-gray-700">LOGIN TO YOUR ACCOUNT</h1>
           <Divider />
           <Form layout="vertical" onFinish={onFinish}>
-            <Form.Item label="Email" name="email" rules={getAntdFormInputRules}>
+            <Form.Item
+              label="Email"
+              name="email"
+              rules={getAntdFormInputRules}
+            >
               <Input />
             </Form.Item>
             <Form.Item
