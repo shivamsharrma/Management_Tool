@@ -16,10 +16,10 @@ const usersSlice = createSlice({
     },
     SetNotifications(state, action) {
       state.notifications = action.payload;
-    }
+    },
   },
 });
 
-export const { SetUser, SetAllUsers , SetNotifications} = usersSlice.actions;
+export const { SetUser, SetAllUsers, SetNotifications } = usersSlice.actions;
 
 export default usersSlice.reducer;

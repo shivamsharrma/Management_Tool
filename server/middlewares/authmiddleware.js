@@ -6,7 +6,6 @@ module.exports = (req, res, next) => {
     req.body.userId = decryptedToken.userId;
     next();
   } catch (error) {
-    
     res.send({
       success: false,
       message: error.message,

@@ -111,6 +111,39 @@ router.post("/delete-project", authMiddleware, async (req, res) => {
   }
 });
 
+
+// add a member to a project
+router.post("/add-member", authMiddleware, async (req, res) => {
+  try {
+    const { email, role, projectId } = req.body;
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.send({
+        success: false,
+        message: "User not found",
+      });
+    }
+    await Project.findByIdAndUpdate(projectId, {
+      $push: {
+        members: {
+          user: user._id,
+          role,
+        },
+      },
+    });
+
+    res.send({
+      success: true,
+      message: "Member added successfully",
+    });
+  } catch (error) {
+    res.send({
+      error: error.message,
+      success: false,
+    });
+  }
+});
+
 // get projects by role
 router.post("/get-projects-by-role", authMiddleware, async (req, res) => {
   try {

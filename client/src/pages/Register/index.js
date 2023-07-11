@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Form, Input, Button,message } from "antd";
+import { Form, Input, Button, message } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import Divider from "../../components/Divider";
 import { RegisterUser } from "../../apicalls/users";
@@ -65,9 +65,7 @@ function Register() {
             >
               <Input />
             </Form.Item>
-            <Form.Item label="Email" name="email"
-              rules={getAntdFormInputRules}
-            >
+            <Form.Item label="Email" name="email" rules={getAntdFormInputRules}>
               <Input />
             </Form.Item>
             <Form.Item

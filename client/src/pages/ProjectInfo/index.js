@@ -11,7 +11,6 @@ import Members from "./Members";
 import Tasks from "./Tasks";
 
 function ProjectInfo() {
- 
   // const [currentUserRole, setCurrentUserRole] = useState("");
   const { user } = useSelector((state) => state.users);
   const [project, setProject] = useState(null);
@@ -37,11 +36,8 @@ function ProjectInfo() {
     }
   };
 
-
-
   useEffect(() => {
     getData();
-   
   }, []);
 
   return (
@@ -89,7 +85,7 @@ function ProjectInfo() {
             <Tasks />
           </Tabs.TabPane>
           <Tabs.TabPane tab="Members" key="2">
-            <Members />
+            <Members project={project}/>
           </Tabs.TabPane>
         </Tabs>
       </div>
