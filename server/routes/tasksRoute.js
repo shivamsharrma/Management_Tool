@@ -3,7 +3,7 @@ const router = require("express").Router();
 const Task = require("../models/taskModel");
 const Project = require("../models/projectModel");
 const User = require("../models/userModel");
-const authMiddleware = require("../middlewares/authMiddleware");
+const authMiddleware = require("../middlewares/authmiddleware");
 const cloudinary = require("../config/cloudinaryConfig");
 const multer = require("multer");
 
