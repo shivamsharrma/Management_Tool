@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const Notification = require("../models/notificationsModel");
-const authMiddleware = require("../middlewares/authMiddleware");
+const authMiddleware = require("../middlewares/authmiddleware");
 
 // add a notification
 router.post("/add-notification", authMiddleware, async (req, res) => {
